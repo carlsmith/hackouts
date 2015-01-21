@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Module><ModulePrefs title="hackouts"><Require feature="rpc"/></ModulePrefs>
+
+<Content type="html"><![CDATA[
+
+<!DOCTYPE html><html><head>
+
+    <title>Hackouts</title>
+
+<!-- CDN: Hangouts and jQuery -->
+<script src=//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js></script>
+<script src="//hangoutsapi.talkgadget.google.com/hangouts/api/hangout.js?v=1.0">
+</script>
+
+<!-- Third Party Libraries: Ace and Skulpt -->
+<script src=//pyhackouts.appspot.com/static/ace/ace.js></script>
+<script src=//pyhackouts.appspot.com/static/ace/theme-twilight.js></script>
+<script src=//pyhackouts.appspot.com/static/skulpt.js></script>
+<script src=//pyhackouts.appspot.com/static/skulpt-stdlib.js></script>
+
+<!-- Our Styles -->
+<link rel=stylesheet href="//pyhackouts.appspot.com/static/styles.css">
+
+    </head><body>
+
+<div id=editor></div>
+<div id=output></div>
+
+<!-- Our Logic -->
+<script src=//pyhackouts.appspot.com/static/main.js></script>
+
+    </body></html>
+
+]]></Content></Module>

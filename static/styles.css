@@ -1,0 +1,32 @@
+::-webkit-scrollbar { display: none }
+
+body {
+    margin: 0;
+    color: #DB4437;
+    background: #141414;
+}
+
+xmp {
+    margin: 0;
+    padding: 0;
+    display: inline;
+    font-size: 12px;
+    line-height: 16px;
+    font-family:
+        'Monaco', 'Menlo', 'Ubuntu Mono',
+        'Consolas', 'source-code-pro', monospace;
+}
+
+#output {
+    margin: 0;
+    line-height: 14px;
+    overflow-y: scroll;
+    word-wrap: break-word;
+    position: fixed; left: 2px; width: 579px;
+}
+
+#editor { position: fixed; top: 0; right: 0; bottom: 0; left: 581px }
+
+.error { color: red }
+
+.ace_cursor { border-left: 8px solid rgba(219, 68, 55, 0.73) !important; }

@@ -29,7 +29,7 @@
         // python
 
         function outf(text) {
-            $output.append($("<xmp>").text(text)).scrollTop(0);
+            $output.append($("<xmp>").text(text)).scrollTop(999999);
         }
 
         function builtinRead(x) {
@@ -56,9 +56,10 @@
             }
             catch(error) {
                 $("<xmp>")
-                .addClass("error")
-                .text(e.toString())
-                .appendTo($output);
+                    .addClass("error")
+                    .text(error.toString())
+                    .appendTo($output);
+                $output.scrollTop(999999);
             }
         }
 
@@ -114,6 +115,7 @@
             if (boss) return;
             
             boss = true;
+            editor.focus();
             editor.setReadOnly(false);
             
             updateLastState();
@@ -130,6 +132,7 @@
             if (payload.command === "takeover") {
                 if (payload.userID !== userID) {
                     boss = false;
+                    editor.blur();
                     editor.setReadOnly(true);
                 } else return;
             }

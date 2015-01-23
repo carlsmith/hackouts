@@ -3,7 +3,6 @@
     function init() {
 
         var $output = $("#output");
-        var serverPath = "//pyhackouts.appspot.com/";
         var userID = gapi.hangout.getLocalParticipant().id;
 
         // resizing
@@ -15,7 +14,6 @@
         // editor
 
         var editor = ace.edit("editor");
-        editor.setReadOnly(true);
         editor.$blockScrolling = Infinity;
         editor.setTheme("ace/theme/twilight");
         editor.session.setMode("ace/mode/python");
@@ -26,17 +24,41 @@
             exec: execute
         });
 
+        editor.commands.addCommand({
+            name: "save",
+            bindKey: {win: "Ctrl-S", mac: "Cmd-S"},
+            exec: function() {
+            
+                var name = prompt("Enter a filename...", ".py");
+                if (!name || name === ".py") return;
+
+                var text = editor.getValue();
+                var tag = document.createElement('a');        
+                
+                var uri =
+                    'data:text/plain;charset=utf-8,'
+                    + encodeURIComponent(text);
+
+                tag.setAttribute('download', name);
+                tag.setAttribute('href', uri);
+                tag.click();
+            }
+        });
+
         // python
 
         function outf(text) {
+            
             $output.append($("<xmp>").text(text)).scrollTop(999999);
         }
 
         function builtinRead(x) {
+            
             if (
                 Sk.builtinFiles === undefined ||
                 Sk.builtinFiles["files"][x] === undefined
                 ) throw "File not found: '" + x + "'";
+            
             return Sk.builtinFiles["files"][x];
         }
 
@@ -50,9 +72,7 @@
             transmit("execute");
             
             try {
-                var source = lastState.source;
-                source = Sk.importMainWithBody("<stdin>", false, source);
-                eval(source);
+                eval(Sk.importMainWithBody("<file>", false, lastState.source));
             }
             catch(error) {
                 $("<xmp>")
@@ -116,14 +136,12 @@
             
             boss = true;
             editor.focus();
-            editor.setReadOnly(false);
-            
             updateLastState();
             transmit("takeover");
             maintainTransmission();
         })
 
-        // response
+        // events
 
         gapi.hangout.data.onStateChanged.add(function(event) {
 
@@ -133,7 +151,6 @@
                 if (payload.userID !== userID) {
                     boss = false;
                     editor.blur();
-                    editor.setReadOnly(true);
                 } else return;
             }
             
